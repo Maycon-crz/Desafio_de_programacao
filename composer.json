@@ -1,12 +1,12 @@
 {
-  "name": "robsonvleite/phptips013",
-  "description": "TRABALHANDO COM REQUISIÇÕES AJAX EM MVC",
+  "name": "mayconnascimento/desafio",
+  "description": "DESAFIO DE PROGRAMAÇÃO – AP CODERS",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
     {
       "name": "Maycon Nascimento de Oliveira",
-      "email": "nmaycon304@gmail.com"
+      "email": "mayconnascimentodeoliveira23@gmail.com"
     }
   ],
   "autoload": {
