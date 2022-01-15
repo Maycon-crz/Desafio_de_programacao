@@ -1,5 +1,0 @@
-class CadastrosDeInquilinos{
-	constructor(){
-		
-	}
-}

@@ -1,6 +1,0 @@
-class EdicaoDeInquilinos{
-	constructor(){
-
-	}
-	
-}

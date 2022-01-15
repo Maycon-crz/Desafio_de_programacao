@@ -5,7 +5,6 @@ namespace Source\controllers;
 use League\Plates\Engine;
 use Source\Models\User;
 class Web{
-	/*@var Engine*/
 	private $view;
 
 	public function __construct($router){
@@ -20,5 +19,5 @@ class Web{
 		echo $this->view->render("home", [
 			"dados" => "Testes"
 		]);
-	}	
+	}
 }

@@ -4,18 +4,24 @@
     <div class="col-2 text-center">&nbsp;</div>
     <div class="col-8 text-center border">
         <h2>Cadastro de inquilinos</h2>
-        <form>
-            <input type="text" name="" placeholder="nome" class="form-control mt-3">
-            <input type="text" name="" placeholder="idade" class="form-control mt-3">
-            <input type="text" name="" placeholder="sexo" class="form-control mt-3">
-            <input type="text" name="" placeholder="telefone" class="form-control mt-3">
-            <input type="text" name="" placeholder="email" class="form-control mt-3">
-
-            <input type="text" name="" placeholder="identificação" class="form-control mt-3">
-            <input type="text" name="" placeholder="proprietário" class="form-control mt-3">
-            <input type="text" name="" placeholder="condomínio" class="form-control mt-3">
-            <input type="text" name="" placeholder="endereço" class="form-control mt-3">
-            <button class="form-control btn btn-outline-success my-3">Cadastrar</button>
+        <form id="formCadastroDeInquilinos" action="<?= url('source/Models/Registration/Inquilinos.php'); ?>">
+            <input type="text" name="registrationInquilinos_nome" placeholder="nome" class="form-control mt-3">
+            <input type="text" name="registrationInquilinos_idade" placeholder="idade" class="form-control mt-3">
+            <div class="border">
+                <input type="radio" name="registrationInquilinos_sexo" id="registrationInquilinos_sexoFeminino" value="feminino">
+                <label for="registrationInquilinos_sexoFeminino">Feminino</label>
+                <input type="radio" name="registrationInquilinos_sexo" id="registrationInquilinos_sexoMasculino" value="masculino">
+                <label for="registrationInquilinos_sexoMasculino">Masculino</label>
+                <input type="radio" name="registrationInquilinos_sexo" id="registrationInquilinos_sexoOutro" value="outro">
+                <label for="registrationInquilinos_sexoOutro">Outro</label>
+            </div>
+            <input type="text" name="registrationInquilinos_telefone" placeholder="telefone" class="form-control mt-3">
+            <input type="text" name="registrationInquilinos_email" placeholder="email" class="form-control mt-3">
+            <select name="registrationInquilinos_Unidade" class="form-select mt-3" id="selectComUnidades">
+                <option>Selecione a Unidade:</option>
+                <option></option>
+            </select>
+            <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
         </form>
     </div>
     <div class="col-2 text-center">&nbsp;</div>
@@ -24,21 +30,42 @@
 <div class="row border">    
     <div class="col-2 text-center">&nbsp;</div>
     <div class="col-8 text-center border">
-        <h2>Unidades de um condomínio</h2>
-        <form>
-            <input type="text" name="" placeholder="descrição" class="form-control mt-3">
-            <input type="text" name="" placeholder="tipo_despesa" class="form-control mt-3">
-            <input type="text" name="" placeholder="valor" class="form-control mt-3">
-            <input type="text" name="" placeholder="vencimento_fatura" class="form-control mt-3">
-            <input type="text" name="" placeholder="status_pagamento" class="form-control mt-3">
-            <button class="form-control btn btn-outline-success my-3">Cadastrar</button>
+        <h2>Cadastro de Unidades de um condomínio</h2>
+        <form id="formCadastroDeUnidades" action="<?= url('source/Models/Registration/Unidades.php'); ?>">            
+            <input type="text" name="registrationUnidades_identificacao" placeholder="identificação" class="form-control">
+            <input type="text" name="registrationUnidades_proprietario" placeholder="proprietário" class="form-control">
+            <input type="text" name="registrationUnidades_condominio" placeholder="condomínio" class="form-control">
+            <input type="text" name="registrationUnidades_endereco" placeholder="endereço" class="form-control">
+            <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
         </form>
     </div>
     <div class="col-2 text-center">&nbsp;</div>
 </div>
-
+<div class="row border">    
+    <div class="col-2 text-center">&nbsp;</div>
+    <div class="col-8 text-center border">
+        <h2>Cadastro de Despesas das unidades</h2>
+        <form id="formCadastroDeDespesas" action="<?= url('source/Models/Registration/Despesas.php'); ?>">
+            <input type="text" name="registrationDespesas_descricao" placeholder="descrição" class="form-control mt-3">
+            <input type="text" name="registrationDespesas_tipo_despesa" placeholder="tipo_despesa" class="form-control mt-3">
+            <input type="text" name="registrationDespesas_valor" placeholder="valor" class="form-control mt-3">
+            <input type="text" name="registrationDespesas_vencimento_fatura" placeholder="vencimento_fatura" class="form-control mt-3">
+            <input type="text" name="registrationDespesas_status_pagamento" placeholder="status_pagamento" class="form-control mt-3">
+            <select name="registrationDespesas_Unidade" class="form-select mt-3" id="selectDespesasComUnidades">
+                <option>Selecione a Unidade:</option>
+                <option></option>
+            </select>
+            <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
+        </form>
+    </div>
+</div>
 
 <?php $v->start("js"); ?>
-<script>    
-</script>
+<script src="<?= url("/theme/assets/js/Edition/Despesas.js"); ?>"></script>
+<script src="<?= url("/theme/assets/js/Edition/Inquilinos.js"); ?>"></script>
+<script src="<?= url("/theme/assets/js/Edition/Unidades.js"); ?>"></script>
+
+<script src="<?= url("/theme/assets/js/Registration/Despesas.js"); ?>"></script>
+<script src="<?= url("/theme/assets/js/Registration/Inquilinos.js"); ?>"></script>
+<script src="<?= url("/theme/assets/js/Registration/Unidades.js"); ?>"></script>
 <?php $v->end(); ?>

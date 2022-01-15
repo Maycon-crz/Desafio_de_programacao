@@ -5,8 +5,8 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6b9c33ca9d12c777aa4f4e2a7dcf62ac3ca73bcc',
-        'name' => 'robsonvleite/phptips013',
+        'reference' => '220e6632a05fecc89864604510673e593dafee51',
+        'name' => 'mayconnascimento/desafio',
         'dev' => true,
     ),
     'versions' => array(
@@ -37,13 +37,13 @@
             'reference' => 'f53f4c1fa4bf307d0f3858a348172ff4faf7669a',
             'dev_requirement' => false,
         ),
-        'robsonvleite/phptips013' => array(
+        'mayconnascimento/desafio' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6b9c33ca9d12c777aa4f4e2a7dcf62ac3ca73bcc',
+            'reference' => '220e6632a05fecc89864604510673e593dafee51',
             'dev_requirement' => false,
         ),
     ),

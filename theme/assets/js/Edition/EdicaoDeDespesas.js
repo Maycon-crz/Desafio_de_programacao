@@ -1,6 +1,0 @@
-class EdicaoDeDespesas{
-	constructor(){
-
-	}
-	
-}

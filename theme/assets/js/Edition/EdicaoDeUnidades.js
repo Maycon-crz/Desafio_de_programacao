@@ -1,5 +1,0 @@
-class EdicaoDeUnidades{
-	constructor(){
-		
-	}
-}
