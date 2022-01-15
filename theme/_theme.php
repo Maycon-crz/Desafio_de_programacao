@@ -26,10 +26,12 @@
                             Cadastros e Edições
                             </a>
                             <ul class="dropdown-menu justify-content-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Cadastros de Unidades de um condomínio</a></li>
-                                <li><a class="dropdown-item" href="#">Edição de Unidades de um condomínio</a></li>
-                                <li><a class="dropdown-item" href="#">Cadastros de inquilinos</a></li>
-                                <li><a class="dropdown-item" href="#">Edição de inquilinos</a></li>                            
+                                <li><a class="dropdown-item btAbreCadastroDeUnidades" href="#">Cadastros de Unidades de um condomínio</a></li>
+                                <li><a class="dropdown-item " href="#">Edição de Unidades de um condomínio</a></li>
+                                <li><a class="dropdown-item btAbreCadastroDeInquilinos" href="#">Cadastros de inquilinos</a></li>
+                                <li><a class="dropdown-item " href="#">Edição de inquilinos</a></li>
+                                <li><a class="dropdown-item btAbreCadastroDeDespesas" href="#">Cadastros de despesas</a></li>
+                                <li><a class="dropdown-item " href="#">Edição de despesas</a></li>
                             </ul>
                         </li>                    
                     </ul>
@@ -41,9 +43,11 @@
         </main>
         <div id="aguarde"></div>
         <script src="<?= url("/theme/assets/js/Ferramentas.js"); ?>"></script>
+        <!-- Plugin jquery.mask.min -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
         <?= $v->section("js"); ?>
         <!-- Javascrip bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <!-- --- -->
+        <!-- --- -->        
     </body>
 </html>

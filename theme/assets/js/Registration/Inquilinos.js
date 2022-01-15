@@ -1,8 +1,17 @@
 class CadastrosDeInquilinos{
-	constructor(){		
+	constructor(){	
+		this.toogleCadastro();	
 		this.cadastrando();
 		this.selectComUnidades();
-	}	
+		this.mascaraDeTelefone();
+	}
+	toogleCadastro(){
+		$(".btAbreCadastroDeInquilinos").on("click", function(event){			
+			$(".linhaInquilinos").toggle();
+			$(".linhaDespesas").hide();
+			$(".linhaUnidades").hide();
+		});	
+	}
 	cadastrando(){
 		$("#formCadastroDeInquilinos").submit(function(event){
 			ferramentas("Aguarde", 1, 0);
@@ -38,6 +47,9 @@ class CadastrosDeInquilinos{
 			},
 			error: function () { ferramentas("Aguarde", 0, 0); }
 		});
+	}
+	mascaraDeTelefone(){
+		$(".telefoneMask").mask("(00) 0000-00000");
 	}
 }
 

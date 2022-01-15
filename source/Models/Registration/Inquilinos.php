@@ -32,38 +32,48 @@
 			}else{ echo json_encode("Erro ao listar Unidade!"); }
 		}		
 		private function validation($con, $ferramentas){
-			$nome = $_POST["registrationInquilinos_nome"] ?? "";
-			$idade = $_POST["registrationInquilinos_idade"] ?? "";
-			$sexo = $_POST["registrationInquilinos_sexo"] ?? "";
-			$telefone = $_POST["registrationInquilinos_telefone"] ?? "";
-			$email = $_POST["registrationInquilinos_email"] ?? "";
-			$unidade = $_POST["registrationInquilinos_Unidade"] ?? "";
+			$data["nome"] = $_POST["registrationInquilinos_nome"] ?? "";
+			$data["idade"] = $_POST["registrationInquilinos_idade"] ?? "";
+			$data["sexo"] = $_POST["registrationInquilinos_sexo"] ?? "";
+			$data["telefone"] = $_POST["registrationInquilinos_telefone"] ?? "";
+			$data["email"] = $_POST["registrationInquilinos_email"] ?? "";
+			$data["unidade"] = $_POST["registrationInquilinos_Unidade"] ?? "";
 
-			$nome = $ferramentas->filtrando($nome);
-			$idade = $ferramentas->filtrando($idade);
-			$sexo = $ferramentas->filtrando($sexo);
-			$telefone = $ferramentas->filtrando($telefone);
-			$email = $ferramentas->filtrando($email);
-			$unidade = $ferramentas->filtrando($unidade);
+			$data["nome"] = $ferramentas->filtrando($data["nome"]);
+			$data["idade"] = $ferramentas->filtrando($data["idade"]);
+			$data["sexo"] = $ferramentas->filtrando($data["sexo"]);
+			$data["telefone"] = $ferramentas->filtrando($data["telefone"]);
+			$data["email"] = $ferramentas->filtrando($data["email"]);			
+			$data["unidade"] = $ferramentas->filtrando($data["unidade"]);
 
-			$msg = ($nome == "") ? "Digite o Nome" : "";
-			$msg = ($msg == "") ? $msg = ($idade == "") ? "Digite a Idade" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($sexo == "") ? "Digite selecione o Sexo" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($telefone == "") ? "Digite o Telefone" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($email == "") ? "Digite o E-mail" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($unidade == "Selecione a Unidade:") ? "Digite selecione a unidade" : "" : $msg;
-			echo json_encode($msg);
+			$msg = ($data["nome"] == "") ? "Digite o Nome" : "";
+			$msg = ($msg == "") ? $msg = ($data["idade"] == "") ? "Digite a Idade" : "" : $msg;
+			$msg = ($msg == "") ? $msg = (!is_numeric($data["idade"])) ? "Idade inválida" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["sexo"] == "") ? "Digite selecione o Sexo" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["telefone"] == "") ? "Digite o Telefone" : "" : $msg;			
+			$msg = ($msg == "") ? $msg = (strlen($data["telefone"]) > 15 || strlen($data["telefone"]) < 12) ? "Telefone inválido" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["email"] == "") ? "Digite o E-mail" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["unidade"] == "Selecione a Unidade:") ? "Digite selecione a unidade" : "" : $msg;			
+			$data["email"] = filter_var($data["email"], FILTER_SANITIZE_EMAIL);
+			if(!filter_var($data["email"], FILTER_VALIDATE_EMAIL)){
+				$msg = ($msg == "") ? $msg = "E-mail inválido!" : $msg;
+			}
+			if($msg == ""){
+				$this->cadastro($con, $data);
+			}else{ echo json_encode($msg); }
 		}
-		/*private function cadastro($data){
-			$sql = "INSERT INTO unidade(identificacao, proprietario, condominio, endereco) VALUES(:identificacao, :proprietario, :condominio, :endereco)";
+		private function cadastro($con, $data){
+			$sql = "INSERT INTO inquilinos(nome, idade, sexo, telefone, email, unidade) VALUES(:nome, :idade, :sexo, :telefone, :email, :unidade)";
 			$sql = $con->prepare($sql);
-			$sql->bindParam(":identificacao", $data["identificacao"]);
-			$sql->bindParam(":proprietario", $data["proprietario"]);
-			$sql->bindParam(":condominio", $data["condominio"]);
-			$sql->bindParam(":endereco", $data["endereco"]);
+			$sql->bindParam(":nome", $data["nome"]);
+			$sql->bindParam(":idade", $data["idade"]);
+			$sql->bindParam(":sexo", $data["sexo"]);
+			$sql->bindParam(":telefone", $data["telefone"]);
+			$sql->bindParam(":email", $data["email"]);
+			$sql->bindParam(":unidade", $data["unidade"]);
 			if($sql->execute()){
-				echo json_encode("Unidade Cadastrada com sucesso!");
-			}else{ echo json_encode("Erro ao cadastrar Unidade!"); }
-		}*/
+				echo json_encode("Inquilino Cadastrado com sucesso!");
+			}else{ echo json_encode("Erro ao cadastrar Inquilino!"); }
+		}
 	}
 	$registrationInquilinos = new RegistrationInquilinos();

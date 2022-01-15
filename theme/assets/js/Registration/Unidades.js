@@ -1,6 +1,14 @@
 class CadastrosDeUnidades{
 	constructor(){
+		this.toogleCadastro();
 		this.cadastrando();
+	}
+	toogleCadastro(){
+		$(".btAbreCadastroDeUnidades").on("click", function(event){			
+			$(".linhaUnidades").toggle();			
+			$(".linhaInquilinos").hide();
+			$(".linhaDespesas").hide();
+		});	
 	}
 	cadastrando(){
 		$("#formCadastroDeUnidades").submit(function(event){

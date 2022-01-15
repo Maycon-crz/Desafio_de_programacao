@@ -1,6 +1,14 @@
 class CadastroDeDespesas{
 	constructor(){
-		this.cadastrando();
+		this.toogleCadastro();
+		this.cadastrando();		
+	}
+	toogleCadastro(){
+		$(".btAbreCadastroDeDespesas").on("click", function(event){			
+			$(".linhaDespesas").toggle();
+			$(".linhaInquilinos").hide();
+			$(".linhaUnidades").hide();
+		});	
 	}
 	cadastrando(){
 		$("#formCadastroDeDespesas").submit(function(event){
