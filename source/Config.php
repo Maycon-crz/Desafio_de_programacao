@@ -1,6 +1,6 @@
 <?php
 /** BASE URL */
-define("ROOT", "http://localhost/Portfolio/Desafio_de_programacao/");
+define("ROOT", "https://localhost/Portfolio/Desafio_de_programacao/");
 
 function url(string $path): string
 {

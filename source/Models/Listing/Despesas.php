@@ -1,46 +1,38 @@
 <?php
-	/*require_once("../Lib/Conn.php");
-	require_once("../Ferramentas.php");	
+	require_once("../Lib/Conn.php");
+	require_once("../Lib/Ferramentas.php");	
 	class ListagemDeDespesas{
+		private static $con;
 		public function __construct(){
-			$con = Connection::getConn();			
-			$ferramentas = new Ferramentas;				
-			if(session_status() === PHP_SESSION_NONE){ session_start(); }
-			if(isset($_POST['comando']) && $_SESSION['login'] == "sim"){
-				$this->listagem($con, $ferramentas);
+			self::$con = (new Conn())->getConn();
+			$ferramentas = new Ferramentas;
+			if(isset($_POST["listar"])){
+				$this->listagem(self::$con, $ferramentas);
 			}
 		}	
 		private function listagem($con, $ferramentas){
-			$comando = $ferramentas->filtrando($_POST['comando']);
-			$parametro = $ferramentas->filtrando($_POST['parametro']);
-			if($comando == 'Carregar'){
-				$sql = "SELECT * FROM empresas WHERE 1=1 ORDER BY id DESC LIMIT :limite";
-				$sql = $con->prepare($sql);
-				$sql->bindValue(':limite', (int) $parametro, PDO::PARAM_INT);	
-			}else{
-				$sql = "SELECT * FROM empresas WHERE nome LIKE :nome ORDER BY id DESC";
-				$sql = $con->prepare($sql);
-				$parametro = "%".$parametro."%";
-				$sql->bindParam(':nome', $parametro);
-			}
-			if($sql->execute()){
-				$result = $sql->fetchAll(PDO::FETCH_ASSOC);
-				$retornado = array();
-				$contador=0;
-				foreach($result as $retorno){ 
-					$retornado[$contador]["id"]		= $retorno["id"];
-					$retornado[$contador]["nome"]	= $retorno["nome"];
-					$retornado[$contador]["estado"]	= $retorno["estado"];
-					$retornado[$contador]["cidade"]	= $retorno["cidade"];
-					$retornado[$contador]["cnpj"]	= $retorno["cnpj"];
-					$retornado[$contador]["data"] 	= $retorno["data"];
-					$contador++;
-				}
-				echo json_encode($retornado);
-			}else{
-				echo json_encode("Erro ao Listar Empresas!");
-			}
-		}	
+			$contador = $ferramentas->filtrando($_POST["listar"]);
+			if(is_numeric($contador)){
+				$sql = "SELECT * FROM despesas WHERE 1=1 ORDER BY id DESC LIMIT :qtd";
+		        $sql = $con->prepare($sql);
+		        $sql->bindParam(":qtd", $contador, PDO::PARAM_INT);
+				if($sql->execute()){
+					$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+					$retorno = array();
+					$contador=0;
+					foreach($result as $retornando){
+						$retorno[$contador]["id"] = $retornando["id"];
+						$retorno[$contador]["descricao"] = $retornando["descricao"];
+						$retorno[$contador]["tipo_despesa"] = $retornando["tipo_despesa"];
+						$retorno[$contador]["valor"] = $retornando["valor"];
+						$retorno[$contador]["vencimento_fatura"] = $retornando["vencimento_fatura"];
+						$retorno[$contador]["status_pagamento"] = $retornando["status_pagamento"];
+						$contador++;
+					}
+					echo json_encode($retorno);
+				}else{ echo json_encode("Erro ao Listar Despesas!"); }
+			}else{ echo json_encode("Erro ao Listar Despesas!"); }
+		}
 	}
-	$listagemDeDespesas = new ListagemDeDespesas();*/
+	$listagemDeDespesas = new ListagemDeDespesas();
 ?>

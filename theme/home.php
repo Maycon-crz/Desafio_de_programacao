@@ -56,7 +56,7 @@
             </select>
             <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
         </form>
-    </div>
+    </div>  
 </div>
 <div class="row">
     <div class="col-2 text-center">&nbsp;</div>
@@ -65,7 +65,7 @@
 </div>
 <div class="row">
     <div class="col-2 text-center">&nbsp;</div>
-    <div class="col-8 text-center" id="linhaListagemDeUnidade"></div>
+    <div class="col-8 text-center" id="linhaListagemDeUnidades"></div>
     <div class="col-2 text-center">&nbsp;</div>
 </div>
 <div class="row">
@@ -73,15 +73,30 @@
     <div class="col-8 text-center" id="linhaListagemDeDespesas"></div>
     <div class="col-2 text-center">&nbsp;</div>
 </div>
-<?php $v->start("js"); ?>
-<script src="<?= url("/theme/assets/js/Listing/Despesas.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Listing/Inquilinos.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Listing/Unidades.js"); ?>"></script>
+<div class="row">
+    <div class="col-2 text-center">&nbsp;</div>
+    <div class="col-8 text-center" id="linhaEdicaoDeInquilinos"></div>
+    <div class="col-2 text-center">&nbsp;</div>
+</div>
+<div class="row">
+    <div class="col-2 text-center">&nbsp;</div>
+    <div class="col-8 text-center" id="linhaEdicaoDeUnidades"></div>
+    <div class="col-2 text-center">&nbsp;</div>
+</div>
+<div class="row">
+    <div class="col-2 text-center">&nbsp;</div>
+    <div class="col-8 text-center" id="linhaEdicaoDeDespesas"></div>
+    <div class="col-2 text-center">&nbsp;</div>
+</div>
 
-<script src="<?= url("/theme/assets/js/Edition/Despesas.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Edition/Inquilinos.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Edition/Unidades.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Registration/Despesas.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Registration/Inquilinos.js"); ?>"></script>
-<script src="<?= url("/theme/assets/js/Registration/Unidades.js"); ?>"></script>
+<?php $v->start("js"); ?>
+    <script src="<?= url("/theme/assets/js/Listing/Inquilinos.js"); ?>"></script>
+    <script src="<?= url("/theme/assets/js/Listing/Unidades.js"); ?>"></script>
+    <script src="<?= url("/theme/assets/js/Listing/Despesas.js"); ?>"></script>    
+    <script src="<?= url("/theme/assets/js/Edition/Inquilinos.js"); ?>"></script>
+    <script src="<?= url("/theme/assets/js/Edition/Unidades.js"); ?>"></script>
+    <script src="<?= url("/theme/assets/js/Edition/Despesas.js"); ?>"></script>    
+    <script src="<?= url("/theme/assets/js/Registration/Inquilinos.js"); ?>"></script>
+    <script src="<?= url("/theme/assets/js/Registration/Unidades.js"); ?>"></script>
+    <script src="<?= url("/theme/assets/js/Registration/Despesas.js"); ?>"></script>
 <?php $v->end(); ?>
