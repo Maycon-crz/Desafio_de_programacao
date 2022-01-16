@@ -20,9 +20,12 @@
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">                    
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeInquilinos" value="<?= url("/source/Models/Listing/Inquilinos.php"); ?>">Inquilinos</button></li>
+                        <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeUnidades" value="<?= url("/source/Models/Listing/Unidades.php"); ?>">Unidades</button></li>
+                        <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeDespesas" value="<?= url("/source/Models/Listing/Despesas.php"); ?>">Despesas</button></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle border p-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros e Edições
                             </a>
                             <ul class="dropdown-menu justify-content-end" aria-labelledby="navbarDropdown">
@@ -33,7 +36,7 @@
                                 <li><a class="dropdown-item btAbreCadastroDeDespesas" href="#">Cadastros de despesas</a></li>
                                 <li><a class="dropdown-item " href="#">Edição de despesas</a></li>
                             </ul>
-                        </li>                    
+                        </li>                        
                     </ul>
                 </div>
             </div>
