@@ -6,21 +6,23 @@
 		public function __construct(){
 			self::$con = (new Conn())->getConn();
 			$ferramentas = new Ferramentas;			
-			if(isset($_POST['NomeFantasia'])){				
-				$this->validacao($con, $ferramentas);
+			if(isset($_POST["nome"])){
+				$this->validacao(self::$con, $ferramentas);
 			}
-			if(isset($_POST['excluir'])){				
-				$this->excluir($con, $ferramentas);				
+			if(isset($_POST["excluir"])){				
+				$this->excluir(self::$con, $ferramentas);				
 			}
 		}
 		private function validacao($con, $ferramentas){
-			$data["nome"] = $_POST["registrationInquilinos_nome"] ?? "";
-			$data["idade"] = $_POST["registrationInquilinos_idade"] ?? "";
-			$data["sexo"] = $_POST["registrationInquilinos_sexo"] ?? "";
-			$data["telefone"] = $_POST["registrationInquilinos_telefone"] ?? "";
-			$data["email"] = $_POST["registrationInquilinos_email"] ?? "";
-			$data["unidade"] = $_POST["registrationInquilinos_Unidade"] ?? "";
+			$data["id"] = $_POST["id"] ?? "";
+			$data["nome"] = $_POST["nome"] ?? "";
+			$data["idade"] = $_POST["idade"] ?? "";
+			$data["sexo"] = $_POST["sexo"] ?? "";
+			$data["telefone"] = $_POST["telefone"] ?? "";
+			$data["email"] = $_POST["email"] ?? "";
+			$data["unidade"] = $_POST["unidade"] ?? "";
 
+			$data["id"] = $ferramentas->filtrando($data["id"]);
 			$data["nome"] = $ferramentas->filtrando($data["nome"]);
 			$data["idade"] = $ferramentas->filtrando($data["idade"]);
 			$data["sexo"] = $ferramentas->filtrando($data["sexo"]);
@@ -28,7 +30,8 @@
 			$data["email"] = $ferramentas->filtrando($data["email"]);			
 			$data["unidade"] = $ferramentas->filtrando($data["unidade"]);
 
-			$msg = ($data["nome"] == "") ? "Digite o Nome" : "";
+			$msg = ($data["id"] == "") ? "Erro de ID entre em contato com o suporte!" : "";
+			$msg = ($msg == "") ? $msg = ($data["nome"] == "") ? "Digite o Nome" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["idade"] == "") ? "Digite a Idade" : "" : $msg;
 			$msg = ($msg == "") ? $msg = (!is_numeric($data["idade"])) ? "Idade inválida" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["sexo"] == "") ? "Digite selecione o Sexo" : "" : $msg;
@@ -41,68 +44,33 @@
 				$msg = ($msg == "") ? $msg = "E-mail inválido!" : $msg;
 			}
 			if($msg == ""){
-				/*$this->cadastro($con, $data);*/
+				$this->atualizar($con, $data);
 			}else{ echo json_encode($msg); }
-		}
-		/*private function atualizar($con, $dados){
-			$sql = "UPDATE empresas SET nome=:nome, estado=:estado, cidade=:cidade, cnpj=:cnpj WHERE id=:id";
-			$sql = $con->prepare($sql);
-			$sql->bindParam(":nome", $dados['NomeFantasia']);
-			$sql->bindParam(":estado", $dados['Estado']);
-			$sql->bindParam(":cidade", $dados['Cidade']);
-			$sql->bindParam(":cnpj", $dados['CNPJ']);
-			$sql->bindParam(":id", $dados['id']);
-			if($sql->execute()){
-				echo json_encode("Dados editados com sucesso");
-			}else{ echo json_encode("Erro ao edita"); }
 		}		
+		private function atualizar($con, $data){
+			$sql = "UPDATE inquilinos SET nome=:nome, idade=:idade, sexo=:sexo, telefone=:telefone, email=:email, unidade=:unidade WHERE id=:id";
+			$sql = $con->prepare($sql);
+			$sql->bindParam(":nome", $data["nome"]);
+			$sql->bindParam(":idade", $data["idade"]);
+			$sql->bindParam(":sexo", $data["sexo"]);
+			$sql->bindParam(":telefone", $data["telefone"]);
+			$sql->bindParam(":email", $data["email"]);
+			$sql->bindParam(":unidade", $data["unidade"]);
+			$sql->bindParam(":id", $data["id"]);
+			if($sql->execute()){
+				echo json_encode("Dados atualizados com sucesso!");
+			}else{ echo json_encode("Erro ao atualizar"); }
+		}
 		private function excluir($con, $ferramentas){			
 			$id = $_POST['excluir'] ?? "";
-			$nomeEmpresa = $_POST['nomeEmpresa'] ?? "";
-			$id = $ferramentas->filtrando($id);
-			$nomeEmpresa = $ferramentas->filtrando($nomeEmpresa);
-			if($nomeEmpresa != "Exclusao_Confirmada"){				
-				$fornecedores = $this->verificaFornecedores($con, $nomeEmpresa);
-			}else{
-				$fornecedores = "no";
-			}
-			
-			$retorno = array();
-			if($fornecedores == "no"){
-				$sql = "DELETE FROM empresas WHERE id=:id";
-				$sql = $con->prepare($sql);			
-				$sql->bindParam(":id", $id);
-				if($sql->execute()){
-					$retorno["msg"] = "Exluido com sucesso";
-				}else{ $retorno["msg"] = "Erro ao Exluir"; }
-			}else{
-				$retorno["msg"] = "Fornecedores";
-				$retorno["Fornecedores"] = $fornecedores;
-			}
-			echo json_encode($retorno);
-		}
-		private function verificaFornecedores($con, $nomeEmpresa){				
-			$sql = "SELECT * FROM fornecedores WHERE empresa LIKE :empresa";
-			$sql = $con->prepare($sql);
-			$nomeEmpresa = "%".$nomeEmpresa."%";
-			$sql->bindParam(':empresa', $nomeEmpresa);
+			$id = $ferramentas->filtrando($id);			
+			$sql = "DELETE FROM inquilinos WHERE id=:id";
+			$sql = $con->prepare($sql);			
+			$sql->bindParam(":id", $id);
 			if($sql->execute()){
-				$result = $sql->fetchAll(PDO::FETCH_ASSOC);
-				$fornecedores = array();
-				$contador=0;				
-				foreach($result as $retorno){
-					$fornecedores[$contador] = $retorno["nome"];
-					$contador++;
-				}
-				if($fornecedores == ""){
-					return "no";
-				}else{
-					return $fornecedores;
-				}				
-			}else{
-				echo json_encode("Erro");
-			}			
-		}*/
+				echo json_encode("Exluido com sucesso");
+			}else{ echo json_encode("Erro ao Exluir"); }
+		}
 	}
 	$edicaoDeInquilinos = new EdicaoDeInquilinos();
 ?>

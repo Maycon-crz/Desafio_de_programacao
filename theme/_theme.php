@@ -2,8 +2,7 @@
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Desafio - <?= $title; ?></title>
         <!-- jquery -->
@@ -28,11 +27,11 @@
                             <a class="nav-link dropdown-toggle border border-success rounded p-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros e Edições
                             </a>
-                            <ul class="dropdown-menu justify-content-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item btAbreCadastroDeUnidades" href="#">Cadastros de Unidades de um condomínio</a></li>
-                                <li><a value="<?= url("source/Models/Listing/Unidades.php"); ?>" class="dropdown-item btAbreEdicaoDeUnidades" href="#">Edição de Unidades de um condomínio</a></li>
+                            <ul class="dropdown-menu justify-content-end" aria-labelledby="navbarDropdown">                                
                                 <li><a class="dropdown-item btAbreCadastroDeInquilinos" href="#">Cadastros de Inquilinos</a></li>
                                 <li><a value="<?= url("source/Models/Listing/Inquilinos.php"); ?>" class="dropdown-item btAbreEdicaoDeInquilinos" href="#">Edição de Inquilinos</a></li>
+                                <li><a class="dropdown-item btAbreCadastroDeUnidades" href="#">Cadastros de Unidades de um condomínio</a></li>
+                                <li><a value="<?= url("source/Models/Listing/Unidades.php"); ?>" class="dropdown-item btAbreEdicaoDeUnidades" href="#">Edição de Unidades de um condomínio</a></li>
                                 <li><a class="dropdown-item btAbreCadastroDeDespesas" href="#">Cadastros de Despesas</a></li>
                                 <li><a value="<?= url("source/Models/Listing/Despesas.php"); ?>" class="dropdown-item btAbreEdicaoDeDespesas" href="#">Edição de Despesas</a></li>
                             </ul>

@@ -19,6 +19,7 @@ class EdicaoDeInquilinos{
 						let inquilinos="<h2>Edição de Inquilinos</h2>";
 						for(let i=0; i<retorno.length; i++){
 							inquilinos+="<form id='formEdicaoInquilinos"+retorno[i]['id']+"' class='formulariosDeEdicaoInquilinos' action='"+url.replace('Listing', 'Edition')+"'><ul class='border border-warning mt-3 p-0 text-center'>";
+								inquilinos+="<li><input type='hidden' class='form-control' name='id' value='"+retorno[i]['id']+"' /></li>";
 								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='nome' value='"+retorno[i]['nome']+"' /></li>";
 								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='idade' value='"+retorno[i]['idade']+"' /></li>";
 								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='sexo' value='"+retorno[i]['sexo']+"' /></li>";
@@ -46,12 +47,38 @@ class EdicaoDeInquilinos{
 		$(".formulariosDeEdicaoInquilinos").submit(function(event){ event.preventDefault(); });
 		$(".btFormulariosDeEdicaoInquilinos").click(function(){
 			let tipoDeFuncao = $(this).text();
+			let idFormulario = $(this).val();
+			let url = $("#formEdicaoInquilinos"+idFormulario).attr("action");					
 			if(tipoDeFuncao == "Editar"){
-				let idFormulario = $(this).val();
 				let data = $("#formEdicaoInquilinos"+idFormulario).serialize();
-				console.log(data);
+				$.ajax({
+					url: url,
+					type: "POST",
+					data: data,
+					dataType: "JSON",
+					success: function(retorno){
+						ferramentas("Aguarde", 0, 0);
+						alert(retorno);
+					},
+					error: function () { ferramentas("Aguarde", 0, 0); }
+				});
 			}else{
-				alert("Excluir");
+				if(confirm("Tem certeza que deseja excluir este inquilino?")){
+					$.ajax({
+						url: url,
+						type: "POST",
+						data: {"excluir": idFormulario},
+						dataType: "JSON",
+						success: function(retorno){
+							ferramentas("Aguarde", 0, 0);
+							alert(retorno);
+							if(retorno == "Exluido com sucesso"){
+								ferramentas("Recarregar", 0, 0);
+							}
+						},
+						error: function () { ferramentas("Aguarde", 0, 0); }
+					});
+				}
 			}			
 		});
 	}
