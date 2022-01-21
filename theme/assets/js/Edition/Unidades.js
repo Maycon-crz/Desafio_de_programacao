@@ -19,12 +19,13 @@ class EdicaoDeUnidades{
 						let unidades="<h2>Edição de Unidades</h2>";
 						for(let i=0; i<retorno.length; i++){
 							unidades+="<form id='formEdicaoUnidades"+retorno[i]['id']+"' class='formulariosDeEdicaoUnidades' action='"+url.replace('Listing', 'Edition')+"'><ul class='border border-warning mt-3 p-0 text-center'>";
+								unidades+="<li><input type='hidden' class='form-control' name='id' value='"+retorno[i]['id']+"' /></li>";
 								unidades+="<li class='border p-3'><input type='text' class='form-control' name='identificacao' value='"+retorno[i]['identificacao']+"' /></li>";
 								unidades+="<li class='border p-3'><input type='text' class='form-control' name='proprietario' value='"+retorno[i]['proprietario']+"' /></li>";
 								unidades+="<li class='border p-3'><input type='text' class='form-control' name='condominio' value='"+retorno[i]['condominio']+"' /></li>";
 								unidades+="<li class='border p-3'><input type='text' class='form-control' name='endereco' value='"+retorno[i]['endereco']+"' /></li>";
 								unidades+="<li><button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-success mt-3 btFormulariosDeEdicaoUnidades' type='button'>Editar</button></li>";
-								unidades+="<li><button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-danger mt-3 btFormulariosDeEdicaoUnidades' type='button'>Excluir</button></li>";
+								unidades+="<li><button value='"+retorno[i]['id']+"' target='"+retorno[i]['identificacao']+"' class='form-control btn btn-outline-danger mt-3 btFormulariosDeEdicaoUnidades' type='button'>Excluir</button></li>";								
 							unidades+="</form></ul>";
 						}
 						$("#linhaEdicaoDeUnidades").html(unidades);
@@ -44,12 +45,34 @@ class EdicaoDeUnidades{
 		$(".formulariosDeEdicaoUnidades").submit(function(event){ event.preventDefault(); });
 		$(".btFormulariosDeEdicaoUnidades").click(function(){
 			let tipoDeFuncao = $(this).text();
-			if(tipoDeFuncao == "Editar"){
-				let idFormulario = $(this).val();
-				let data = $("#formEdicaoUnidades"+idFormulario).serialize();
-				console.log(data);
+			let idFormulario = $(this).val();
+			let url = $("#formEdicaoUnidades"+idFormulario).attr("action");
+			if(tipoDeFuncao == "Editar"){				
+				let data = $("#formEdicaoUnidades"+idFormulario).serialize();				
+				$.ajax({
+					url: url,
+					type: "POST",
+					data: data,
+					dataType: "JSON",
+					success: function(retorno){
+						ferramentas("Aguarde", 0, 0);
+						alert(retorno);
+					},
+					error: function () { ferramentas("Aguarde", 0, 0); }
+				});
 			}else{
-				alert("Excluir");
+				let identificacao = $(this).attr("target");
+				$.ajax({
+					url: url,
+					type: "POST",
+					data: {"excluir": identificacao},
+					dataType: "JSON",
+					success: function(retorno){
+						ferramentas("Aguarde", 0, 0);
+						alert(retorno);
+					},
+					error: function () { ferramentas("Aguarde", 0, 0); }
+				});
 			}			
 		});
 	}

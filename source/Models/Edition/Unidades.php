@@ -6,92 +6,100 @@
 		public function __construct(){
 			self::$con = (new Conn())->getConn();
 			$ferramentas = new Ferramentas;			
-			if(isset($_POST['NomeFantasia'])){				
-				$this->validacao($con, $ferramentas);
+			if(isset($_POST['identificacao'])){				
+				$this->validacao(self::$con, $ferramentas);
 			}
 			if(isset($_POST['excluir'])){				
-				$this->excluir($con, $ferramentas);				
+				$this->excluir(self::$con, $ferramentas);
 			}
 		}
 		private function validacao($con, $ferramentas){
-			$data["identificacao"] = $_POST["registrationUnidades_identificacao"] ?? "";
-			$data["proprietario"] = $_POST["registrationUnidades_proprietario"] ?? "";
-			$data["condominio"] = $_POST["registrationUnidades_condominio"] ?? "";
-			$data["endereco"] = $_POST["registrationUnidades_endereco"] ?? "";
+			$data["id"] = $_POST["id"] ?? "";
+			$data["identificacao"] = $_POST["identificacao"] ?? "";
+			$data["proprietario"] = $_POST["proprietario"] ?? "";
+			$data["condominio"] = $_POST["condominio"] ?? "";
+			$data["endereco"] = $_POST["endereco"] ?? "";
 
+			$data["id"] = $ferramentas->filtrando($data["id"]);
 			$data["identificacao"] = $ferramentas->filtrando($data["identificacao"]);
 			$data["proprietario"] = $ferramentas->filtrando($data["proprietario"]);
 			$data["condominio"] = $ferramentas->filtrando($data["condominio"]);
 			$data["endereco"] = $ferramentas->filtrando($data["endereco"]);
 
-			$msg = ($data["identificacao"] == "") ? "Digite a identificação" : "";
+			$msg = ($data["id"] == "") ? "Erro de ID entre em contato com o suporte!" : "";
+			$msg = ($msg == "") ? $msg = ($data["identificacao"] == "") ? "Digite a identificação" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["proprietario"] == "") ? "Digite o nome do proprietário" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["condominio"] == "") ? "Digite o condomínio" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["endereco"] == "") ? "Digite o endereço" : "" : $msg;
 			
 			if($msg === ""){
-				/*$this->atualizar($con, $data);*/
+				$this->atualizar($con, $data);
 			}else{ echo json_encode($msg); }
 		}
-		/*private function atualizar($con, $dados){
-			$sql = "UPDATE empresas SET nome=:nome, estado=:estado, cidade=:cidade, cnpj=:cnpj WHERE id=:id";
+		private function atualizar($con, $data){
+			$sql = "UPDATE unidades SET identificacao=:identificacao, proprietario=:proprietario, condominio=:condominio, endereco=:endereco WHERE id=:id";
 			$sql = $con->prepare($sql);
-			$sql->bindParam(":nome", $dados['NomeFantasia']);
-			$sql->bindParam(":estado", $dados['Estado']);
-			$sql->bindParam(":cidade", $dados['Cidade']);
-			$sql->bindParam(":cnpj", $dados['CNPJ']);
-			$sql->bindParam(":id", $dados['id']);
+			$sql->bindParam(":identificacao", $data["identificacao"]);
+			$sql->bindParam(":proprietario", $data["proprietario"]);
+			$sql->bindParam(":condominio", $data["condominio"]);
+			$sql->bindParam(":endereco", $data["endereco"]);
+			$sql->bindParam(":id", $data["id"]);
 			if($sql->execute()){
-				echo json_encode("Dados editados com sucesso");
-			}else{ echo json_encode("Erro ao edita"); }
+				echo json_encode("Dados atualizados com sucesso");
+			}else{ echo json_encode("Erro ao atualizar"); }
 		}		
 		private function excluir($con, $ferramentas){			
 			$id = $_POST['excluir'] ?? "";
-			$nomeEmpresa = $_POST['nomeEmpresa'] ?? "";
-			$id = $ferramentas->filtrando($id);
-			$nomeEmpresa = $ferramentas->filtrando($nomeEmpresa);
-			if($nomeEmpresa != "Exclusao_Confirmada"){				
-				$fornecedores = $this->verificaFornecedores($con, $nomeEmpresa);
-			}else{
-				$fornecedores = "no";
-			}
-			
-			$retorno = array();
-			if($fornecedores == "no"){
-				$sql = "DELETE FROM empresas WHERE id=:id";
-				$sql = $con->prepare($sql);			
-				$sql->bindParam(":id", $id);
-				if($sql->execute()){
-					$retorno["msg"] = "Exluido com sucesso";
-				}else{ $retorno["msg"] = "Erro ao Exluir"; }
-			}else{
-				$retorno["msg"] = "Fornecedores";
-				$retorno["Fornecedores"] = $fornecedores;
-			}
+			$id = $ferramentas->filtrando($id);			
+			$retorno = $this->verificaDependentes($con, $id, "inquilinos");
+			// $retorno = array();
+			// if($dependentes == false){
+			// 	$sql = "DELETE FROM unidades WHERE identificacao=:identificacao";
+			// 	$sql = $con->prepare($sql);			
+			// 	$sql->bindParam(":identificacao", $id);
+			// 	if($sql->execute()){
+			// 		$retorno["msg"] = "Exluido com sucesso";
+			// 	}else{ $retorno["msg"] = "Erro ao Exluir"; }
+			// }else{
+			// 	$sql = "DELETE FROM unidades WHERE identificacao=:identificacao";
+			// 	$sql = $con->prepare($sql);			
+			// 	$sql->bindParam(":identificacao", $id);
+			// 	if($sql->execute()){
+			// 		$sql = "DELETE FROM inquilinos WHERE unidade=:identificacao";
+			// 		$sql = $con->prepare($sql);			
+			// 		$sql->bindParam(":identificacao", $id);
+			// 		if($sql->execute()){
+			// 			$sql = "DELETE FROM despesas WHERE unidade=:identificacao";
+			// 			$sql = $con->prepare($sql);			
+			// 			$sql->bindParam(":identificacao", $id);
+			// 			if($sql->execute()){
+			// 				$retorno["msg"] = "Exluido com sucesso";
+			// 			}else{ $retorno["msg"] = "Faltou Exluir Despesas"; }
+			// 		}else{ $retorno["msg"] = "Faltou Exluir Inquilinos"; }
+			// 	}else{ $retorno["msg"] = "Erro ao Exluir"; }
+			// }
 			echo json_encode($retorno);
 		}
-		private function verificaFornecedores($con, $nomeEmpresa){				
-			$sql = "SELECT * FROM fornecedores WHERE empresa LIKE :empresa";
+		private function verificaDependentes($con, $unidade, $dependente){
+			//Funcionando só falta a parte de deletar
+			$sql = "SELECT * FROM $dependente WHERE unidade=:unidade";
 			$sql = $con->prepare($sql);
-			$nomeEmpresa = "%".$nomeEmpresa."%";
-			$sql->bindParam(':empresa', $nomeEmpresa);
+			$sql->bindParam(":unidade", $unidade);
 			if($sql->execute()){
 				$result = $sql->fetchAll(PDO::FETCH_ASSOC);
-				$fornecedores = array();
-				$contador=0;				
+				$verifica = "";				
 				foreach($result as $retorno){
-					$fornecedores[$contador] = $retorno["nome"];
-					$contador++;
+					$verifica = $retorno["id"];
 				}
-				if($fornecedores == ""){
-					return "no";
+				if($verifica == ""){
+					return false;
 				}else{
-					return $fornecedores;
+					return true;
 				}				
 			}else{
 				echo json_encode("Erro");
-			}			
-		}*/
+			}
+		}
 	}
 	$edicaoDeUnidades = new EdicaoDeUnidades();
 ?>

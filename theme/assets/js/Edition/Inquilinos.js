@@ -17,6 +17,8 @@ class EdicaoDeInquilinos{
 					success: function(retorno){
 						ferramentas("Aguarde", 0, 0);
 						let inquilinos="<h2>Edição de Inquilinos</h2>";
+						console.log(retorno);
+						console.log(url);
 						for(let i=0; i<retorno.length; i++){
 							inquilinos+="<form id='formEdicaoInquilinos"+retorno[i]['id']+"' class='formulariosDeEdicaoInquilinos' action='"+url.replace('Listing', 'Edition')+"'><ul class='border border-warning mt-3 p-0 text-center'>";
 								inquilinos+="<li><input type='hidden' class='form-control' name='id' value='"+retorno[i]['id']+"' /></li>";
@@ -48,7 +50,7 @@ class EdicaoDeInquilinos{
 		$(".btFormulariosDeEdicaoInquilinos").click(function(){
 			let tipoDeFuncao = $(this).text();
 			let idFormulario = $(this).val();
-			let url = $("#formEdicaoInquilinos"+idFormulario).attr("action");					
+			let url = $("#formEdicaoInquilinos"+idFormulario).attr("action");
 			if(tipoDeFuncao == "Editar"){
 				let data = $("#formEdicaoInquilinos"+idFormulario).serialize();
 				$.ajax({

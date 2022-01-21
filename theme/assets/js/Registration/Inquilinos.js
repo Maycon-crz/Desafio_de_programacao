@@ -24,6 +24,9 @@ class CadastrosDeInquilinos{
 				success: function(retorno){
 					ferramentas("Aguarde", 0, 0);
 					alert(retorno);
+					if(retorno == "Inquilino Cadastrado com sucesso!"){
+						ferramentas("Recarregar", 0, 0);
+					}					
 				},
 				error: function () { ferramentas("Aguarde", 0, 0); }
 			});

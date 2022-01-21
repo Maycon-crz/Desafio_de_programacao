@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-2 text-center">&nbsp;</div>
-    <div class="col-8 text-center">        
+    <div class="col-8 text-center">
         <form id="formCadastroDeInquilinos" class="linhaInquilinos ocultar" action="<?= url('source/Models/Registration/Inquilinos.php'); ?>">
             <h2>Cadastro de inquilinos</h2>
             <input type="text" name="registrationInquilinos_nome" placeholder="nome" class="form-control mt-3">
