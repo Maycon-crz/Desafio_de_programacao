@@ -45,6 +45,7 @@
         </main>
         <div id="aguarde"></div>
         <script src="<?= url("/theme/assets/js/Ferramentas.js"); ?>"></script>
+        <script src="<?= url("/theme/assets/js/selectComUnidade.js"); ?>"></script>
         <!-- Plugin jquery.mask.min -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
         <?= $v->section("js"); ?>

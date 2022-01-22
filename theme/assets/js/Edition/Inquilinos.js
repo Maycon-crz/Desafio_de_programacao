@@ -34,7 +34,7 @@ class EdicaoDeInquilinos{
 						}
 						$("#linhaEdicaoDeInquilinos").html(inquilinos);
 						contador = contador+4;
-						objeto.editar();
+						objeto.editar(objeto);
 					},
 					error: function () { ferramentas("Aguarde", 0, 0); }
 				});				
@@ -45,13 +45,14 @@ class EdicaoDeInquilinos{
 			}
 		});
 	}
-	editar(){
+	editar(objeto){
 		$(".formulariosDeEdicaoInquilinos").submit(function(event){ event.preventDefault(); });
 		$(".btFormulariosDeEdicaoInquilinos").click(function(){
 			let tipoDeFuncao = $(this).text();
 			let idFormulario = $(this).val();
 			let url = $("#formEdicaoInquilinos"+idFormulario).attr("action");
 			if(tipoDeFuncao == "Editar"){
+				ferramentas("Aguarde", 1, 0);
 				let data = $("#formEdicaoInquilinos"+idFormulario).serialize();
 				$.ajax({
 					url: url,
@@ -65,24 +66,28 @@ class EdicaoDeInquilinos{
 					error: function () { ferramentas("Aguarde", 0, 0); }
 				});
 			}else{
-				if(confirm("Tem certeza que deseja excluir este inquilino?")){
-					$.ajax({
-						url: url,
-						type: "POST",
-						data: {"excluir": idFormulario},
-						dataType: "JSON",
-						success: function(retorno){
-							ferramentas("Aguarde", 0, 0);
-							alert(retorno);
-							if(retorno == "Exluido com sucesso"){
-								ferramentas("Recarregar", 0, 0);
-							}
-						},
-						error: function () { ferramentas("Aguarde", 0, 0); }
-					});
-				}
+				objeto.excluir(url, idFormulario);
 			}			
 		});
+	}
+	excluir(url, idFormulario){
+		if(confirm("Tem certeza que deseja excluir este inquilino?")){
+			ferramentas("Aguarde", 1, 0);
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: {"excluir": idFormulario},
+				dataType: "JSON",
+				success: function(retorno){
+					ferramentas("Aguarde", 0, 0);
+					alert(retorno);
+					if(retorno == "Exluido com sucesso!"){
+						ferramentas("Recarregar", 0, 0);
+					}
+				},
+				error: function () { ferramentas("Aguarde", 0, 0); }
+			});
+		}
 	}
 }
 

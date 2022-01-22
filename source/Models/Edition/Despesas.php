@@ -6,94 +6,65 @@
 		public function __construct(){
 			self::$con = (new Conn())->getConn();
 			$ferramentas = new Ferramentas;			
-			if(isset($_POST['NomeFantasia'])){				
-				$this->validacao($con, $ferramentas);
+			if(isset($_POST['descricao'])){				
+				$this->validacao(self::$con, $ferramentas);
 			}
 			if(isset($_POST['excluir'])){				
-				$this->excluir($con, $ferramentas);				
+				$this->excluir(self::$con, $ferramentas);				
 			}
 		}
 		private function validacao($con, $ferramentas){
-			$data["descricao"] = $_POST["registrationDespesas_descricao"] ?? "";
-			$data["tipo_despesa"] = $_POST["registrationDespesas_tipo_despesa"] ?? "";
-			$data["valor"] = $_POST["registrationDespesas_valor"] ?? "";
-			$data["vencimento_fatura"] = $_POST["registrationDespesas_vencimento_fatura"] ?? "";
-			$data["status_pagamento"] = $_POST["registrationDespesas_status_pagamento"] ?? "";
+			$data["id"] = $_POST["id"] ?? "";
+			$data["unidade"] = $_POST["unidade"] ?? "";
+			$data["descricao"] = $_POST["descricao"] ?? "";
+			$data["tipo_despesa"] = $_POST["tipo_despesa"] ?? "";
+			$data["valor"] = $_POST["valor"] ?? "";
+			$data["vencimento_fatura"] = $_POST["vencimento_fatura"] ?? "";
+			$data["status_pagamento"] = $_POST["status_pagamento"] ?? "";
 
+			$data["id"] = $ferramentas->filtrando($data["id"]);
+			$data["unidade"] = $ferramentas->filtrando($data["unidade"]);
 			$data["descricao"] = $ferramentas->filtrando($data["descricao"]);
 			$data["tipo_despesa"] = $ferramentas->filtrando($data["tipo_despesa"]);
 			$data["valor"] = $ferramentas->filtrando($data["valor"]);
 			$data["vencimento_fatura"] = $ferramentas->filtrando($data["vencimento_fatura"]);
 			$data["status_pagamento"] = $ferramentas->filtrando($data["status_pagamento"]);
 
-			$msg = ($data["descricao"] == "") ? "Digite a descrição" : "";
-			$msg = ($msg == "") ? $msg = ($data["tipo_despesa"] == "") ? "Digite o tipo de despesa" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["valor"] == "") ? "Digite o valor" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["vencimento_fatura"] == "") ? "Digite o vencimento da fatura" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["status_pagamento"] == "") ? "Digite o status pagamento" : "" : $msg;			
+			$msg = ($data["id"] == "") ? "Erro de ID entre em contato com o suporte!" : "";
+			$msg = ($msg == "") ? $msg = ($data["unidade"] == "") ? "Digite a unidade!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["descricao"] == "") ? "Digite a descrição!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["tipo_despesa"] == "") ? "Digite o tipo de despesa!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["valor"] == "") ? "Digite o valor!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["vencimento_fatura"] == "") ? "Digite o vencimento da fatura!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["status_pagamento"] == "") ? "Digite o status pagamento!" : "" : $msg;			
 			if($msg == ""){
-				/*$this->atualizar($con, $data);*/
+				$this->atualizar($con, $data);				
 			}else{ echo json_encode($msg); }
 		}
-		/*private function atualizar($con, $dados){
-			$sql = "UPDATE empresas SET nome=:nome, estado=:estado, cidade=:cidade, cnpj=:cnpj WHERE id=:id";
+		private function atualizar($con, $data){
+			$sql = "UPDATE despesas SET unidade=:unidade, descricao=:descricao, tipo_despesa=:tipo_despesa, valor=:valor, vencimento_fatura=:vencimento_fatura, status_pagamento=:status_pagamento WHERE id=:id";
 			$sql = $con->prepare($sql);
-			$sql->bindParam(":nome", $dados['NomeFantasia']);
-			$sql->bindParam(":estado", $dados['Estado']);
-			$sql->bindParam(":cidade", $dados['Cidade']);
-			$sql->bindParam(":cnpj", $dados['CNPJ']);
-			$sql->bindParam(":id", $dados['id']);
+			$sql->bindParam(":unidade", $data["unidade"]);
+			$sql->bindParam(":descricao", $data["descricao"]);
+			$sql->bindParam(":tipo_despesa", $data["tipo_despesa"]);
+			$sql->bindParam(":valor", $data["valor"]);
+			$sql->bindParam(":vencimento_fatura", $data["vencimento_fatura"]);
+			$sql->bindParam(":status_pagamento", $data["status_pagamento"]);
+			$sql->bindParam(":id", $data["id"]);
 			if($sql->execute()){
-				echo json_encode("Dados editados com sucesso");
-			}else{ echo json_encode("Erro ao edita"); }
+				echo json_encode("Dados atualizados com sucesso!");
+			}else{ echo json_encode("Erro ao atualizar!"); }
 		}		
 		private function excluir($con, $ferramentas){			
 			$id = $_POST['excluir'] ?? "";
-			$nomeEmpresa = $_POST['nomeEmpresa'] ?? "";
-			$id = $ferramentas->filtrando($id);
-			$nomeEmpresa = $ferramentas->filtrando($nomeEmpresa);
-			if($nomeEmpresa != "Exclusao_Confirmada"){				
-				$fornecedores = $this->verificaFornecedores($con, $nomeEmpresa);
-			}else{
-				$fornecedores = "no";
-			}
-			
-			$retorno = array();
-			if($fornecedores == "no"){
-				$sql = "DELETE FROM empresas WHERE id=:id";
-				$sql = $con->prepare($sql);			
-				$sql->bindParam(":id", $id);
-				if($sql->execute()){
-					$retorno["msg"] = "Exluido com sucesso";
-				}else{ $retorno["msg"] = "Erro ao Exluir"; }
-			}else{
-				$retorno["msg"] = "Fornecedores";
-				$retorno["Fornecedores"] = $fornecedores;
-			}
-			echo json_encode($retorno);
-		}
-		private function verificaFornecedores($con, $nomeEmpresa){				
-			$sql = "SELECT * FROM fornecedores WHERE empresa LIKE :empresa";
-			$sql = $con->prepare($sql);
-			$nomeEmpresa = "%".$nomeEmpresa."%";
-			$sql->bindParam(':empresa', $nomeEmpresa);
+			$id = $ferramentas->filtrando($id);			
+			$sql = "DELETE FROM despesas WHERE id=:id";
+			$sql = $con->prepare($sql);			
+			$sql->bindParam(":id", $id);
 			if($sql->execute()){
-				$result = $sql->fetchAll(PDO::FETCH_ASSOC);
-				$fornecedores = array();
-				$contador=0;				
-				foreach($result as $retorno){
-					$fornecedores[$contador] = $retorno["nome"];
-					$contador++;
-				}
-				if($fornecedores == ""){
-					return "no";
-				}else{
-					return $fornecedores;
-				}				
-			}else{
-				echo json_encode("Erro");
-			}			
-		}*/
+				echo json_encode("Exluido com sucesso!");
+			}else{ echo json_encode("Erro ao Exluir!"); }
+		}
 	}
 	$edicaoDeDespesas = new EdicaoDeDespesas();
 ?>

@@ -5,19 +5,19 @@
     <div class="col-8 text-center">
         <form id="formCadastroDeInquilinos" class="linhaInquilinos ocultar" action="<?= url('source/Models/Registration/Inquilinos.php'); ?>">
             <h2>Cadastro de inquilinos</h2>
-            <input type="text" name="registrationInquilinos_nome" placeholder="nome" class="form-control mt-3">
-            <input type="number" name="registrationInquilinos_idade" placeholder="idade" class="form-control mt-3">
+            <input type="text" name="nome" placeholder="nome" class="form-control mt-3">
+            <input type="number" name="idade" placeholder="idade" class="form-control mt-3">
             <div class="border">
-                <input type="radio" name="registrationInquilinos_sexo" id="registrationInquilinos_sexoFeminino" value="feminino">
-                <label for="registrationInquilinos_sexoFeminino">Feminino</label>
-                <input type="radio" name="registrationInquilinos_sexo" id="registrationInquilinos_sexoMasculino" value="masculino">
-                <label for="registrationInquilinos_sexoMasculino">Masculino</label>
-                <input type="radio" name="registrationInquilinos_sexo" id="registrationInquilinos_sexoOutro" value="outro">
-                <label for="registrationInquilinos_sexoOutro">Outro</label>
+                <input type="radio" name="sexo" id="sexoFeminino" value="feminino">
+                <label for="sexoFeminino">Feminino</label>
+                <input type="radio" name="sexo" id="sexoMasculino" value="masculino">
+                <label for="sexoMasculino">Masculino</label>
+                <input type="radio" name="sexo" id="sexoOutro" value="outro">
+                <label for="sexoOutro">Outro</label>
             </div>
-            <input type="text" name="registrationInquilinos_telefone" placeholder="telefone" class="form-control mt-3 telefoneMask">
-            <input type="text" name="registrationInquilinos_email" placeholder="email" class="form-control mt-3">
-            <select name="registrationInquilinos_Unidade" class="form-select mt-3" id="selectComUnidades">
+            <input type="text" name="telefone" placeholder="telefone" class="form-control mt-3 telefoneMask">
+            <input type="text" name="email" placeholder="email" class="form-control mt-3">
+            <select name="unidade" class="form-select mt-3" id="selectComUnidades">
                 <option>Selecione a Unidade:</option>                
             </select>
             <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
@@ -31,10 +31,10 @@
     <div class="col-8 text-center">        
         <form id="formCadastroDeUnidades" class="linhaUnidades ocultar" action="<?= url('source/Models/Registration/Unidades.php'); ?>">            
             <h2>Cadastro de Unidades de um condomínio</h2>
-            <input type="text" name="registrationUnidades_identificacao" placeholder="identificação" class="form-control">
-            <input type="text" name="registrationUnidades_proprietario" placeholder="proprietário" class="form-control">
-            <input type="text" name="registrationUnidades_condominio" placeholder="condomínio" class="form-control">
-            <input type="text" name="registrationUnidades_endereco" placeholder="endereço" class="form-control">
+            <input type="text" name="identificacao" placeholder="identificação" class="form-control">
+            <input type="text" name="proprietario" placeholder="proprietário" class="form-control">
+            <input type="text" name="condominio" placeholder="condomínio" class="form-control">
+            <input type="text" name="endereco" placeholder="endereço" class="form-control">
             <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
         </form>
     </div>
@@ -45,15 +45,15 @@
     <div class="col-8 text-center">        
         <form id="formCadastroDeDespesas" class="linhaDespesas ocultar" action="<?= url('source/Models/Registration/Despesas.php'); ?>">
             <h2>Cadastro de Despesas das unidades</h2>
-            <input type="text" name="registrationDespesas_descricao" placeholder="descrição" class="form-control mt-3">
-            <input type="text" name="registrationDespesas_tipo_despesa" placeholder="tipo_despesa" class="form-control mt-3">
-            <input type="text" name="registrationDespesas_valor" placeholder="valor" class="form-control mt-3">
-            <input type="datetime-local" name="registrationDespesas_vencimento_fatura" placeholder="vencimento_fatura" class="form-control mt-3">
-            <input type="text" name="registrationDespesas_status_pagamento" placeholder="status_pagamento" class="form-control mt-3">
-            <select name="registrationDespesas_Unidade" class="form-select mt-3" id="selectDespesasComUnidades">
+            <select name="unidade" class="form-select mt-3" id="selectDespesasComUnidades">
                 <option>Selecione a Unidade:</option>
                 <option></option>
             </select>
+            <input type="text" name="descricao" placeholder="descrição" class="form-control mt-3">
+            <input type="text" name="tipo_despesa" placeholder="tipo_despesa" class="form-control mt-3">
+            <input type="text" name="valor" placeholder="valor" class="form-control mt-3">
+            <input type="datetime-local" name="vencimento_fatura" placeholder="vencimento_fatura" class="form-control mt-3">
+            <input type="text" name="status_pagamento" placeholder="status_pagamento" class="form-control mt-3">            
             <button type="submit" class="form-control btn btn-outline-success my-3">Cadastrar</button>
         </form>
     </div>  

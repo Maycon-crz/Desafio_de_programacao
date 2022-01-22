@@ -27,10 +27,10 @@
 			$data["endereco"] = $ferramentas->filtrando($data["endereco"]);
 
 			$msg = ($data["id"] == "") ? "Erro de ID entre em contato com o suporte!" : "";
-			$msg = ($msg == "") ? $msg = ($data["identificacao"] == "") ? "Digite a identificação" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["proprietario"] == "") ? "Digite o nome do proprietário" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["condominio"] == "") ? "Digite o condomínio" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["endereco"] == "") ? "Digite o endereço" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["identificacao"] == "") ? "Digite a identificação!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["proprietario"] == "") ? "Digite o nome do proprietário!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["condominio"] == "") ? "Digite o condomínio!" : "" : $msg;
+			$msg = ($msg == "") ? $msg = ($data["endereco"] == "") ? "Digite o endereço!" : "" : $msg;
 			
 			if($msg === ""){
 				$this->atualizar($con, $data);
@@ -45,60 +45,18 @@
 			$sql->bindParam(":endereco", $data["endereco"]);
 			$sql->bindParam(":id", $data["id"]);
 			if($sql->execute()){
-				echo json_encode("Dados atualizados com sucesso");
+				echo json_encode("Dados atualizados com sucesso!");
 			}else{ echo json_encode("Erro ao atualizar"); }
-		}		
-		private function excluir($con, $ferramentas){			
+		}
+		private function excluir($con, $ferramentas){
 			$id = $_POST['excluir'] ?? "";
 			$id = $ferramentas->filtrando($id);			
-			$retorno = $this->verificaDependentes($con, $id, "inquilinos");
-			// $retorno = array();
-			// if($dependentes == false){
-			// 	$sql = "DELETE FROM unidades WHERE identificacao=:identificacao";
-			// 	$sql = $con->prepare($sql);			
-			// 	$sql->bindParam(":identificacao", $id);
-			// 	if($sql->execute()){
-			// 		$retorno["msg"] = "Exluido com sucesso";
-			// 	}else{ $retorno["msg"] = "Erro ao Exluir"; }
-			// }else{
-			// 	$sql = "DELETE FROM unidades WHERE identificacao=:identificacao";
-			// 	$sql = $con->prepare($sql);			
-			// 	$sql->bindParam(":identificacao", $id);
-			// 	if($sql->execute()){
-			// 		$sql = "DELETE FROM inquilinos WHERE unidade=:identificacao";
-			// 		$sql = $con->prepare($sql);			
-			// 		$sql->bindParam(":identificacao", $id);
-			// 		if($sql->execute()){
-			// 			$sql = "DELETE FROM despesas WHERE unidade=:identificacao";
-			// 			$sql = $con->prepare($sql);			
-			// 			$sql->bindParam(":identificacao", $id);
-			// 			if($sql->execute()){
-			// 				$retorno["msg"] = "Exluido com sucesso";
-			// 			}else{ $retorno["msg"] = "Faltou Exluir Despesas"; }
-			// 		}else{ $retorno["msg"] = "Faltou Exluir Inquilinos"; }
-			// 	}else{ $retorno["msg"] = "Erro ao Exluir"; }
-			// }
-			echo json_encode($retorno);
-		}
-		private function verificaDependentes($con, $unidade, $dependente){
-			//Funcionando só falta a parte de deletar
-			$sql = "SELECT * FROM $dependente WHERE unidade=:unidade";
+			$sql = "DELETE FROM unidades WHERE identificacao=:identificacao";
 			$sql = $con->prepare($sql);
-			$sql->bindParam(":unidade", $unidade);
+			$sql->bindParam(":identificacao", $id);
 			if($sql->execute()){
-				$result = $sql->fetchAll(PDO::FETCH_ASSOC);
-				$verifica = "";				
-				foreach($result as $retorno){
-					$verifica = $retorno["id"];
-				}
-				if($verifica == ""){
-					return false;
-				}else{
-					return true;
-				}				
-			}else{
-				echo json_encode("Erro");
-			}
+				echo json_encode("Exluido com sucesso!");
+			}else{ echo json_encode("Erro ao Exluir, pode ser necessário excluir primeiro inquilinos e/ou despesas relacionadas a unidade!"); }				
 		}
 	}
 	$edicaoDeUnidades = new EdicaoDeUnidades();

@@ -7,7 +7,7 @@
 		public function __construct(){
 			self::$con = (new Conn())->getConn();
 			$ferramentas = new Ferramentas();			
-			if(isset($_POST['registrationInquilinos_nome'])){
+			if(isset($_POST['nome'])){
 				$this->validation(self::$con, $ferramentas);
 			}
 			if(isset($_POST['selectUnidades'])){
@@ -22,6 +22,7 @@
 				$retorno = array();
 				$contador=0;
 				foreach($data as $retornando){
+					$retorno[$contador]["id"] = $retornando["id"];
 					$retorno[$contador]["identificacao"] = $retornando["identificacao"];
 					$retorno[$contador]["proprietario"] = $retornando["proprietario"];
 					$retorno[$contador]["condominio"] = $retornando["condominio"];
@@ -32,12 +33,12 @@
 			}else{ echo json_encode("Erro ao listar Unidade!"); }
 		}		
 		private function validation($con, $ferramentas){
-			$data["nome"] = $_POST["registrationInquilinos_nome"] ?? "";
-			$data["idade"] = $_POST["registrationInquilinos_idade"] ?? "";
-			$data["sexo"] = $_POST["registrationInquilinos_sexo"] ?? "";
-			$data["telefone"] = $_POST["registrationInquilinos_telefone"] ?? "";
-			$data["email"] = $_POST["registrationInquilinos_email"] ?? "";
-			$data["unidade"] = $_POST["registrationInquilinos_Unidade"] ?? "";
+			$data["nome"] = $_POST["nome"] ?? "";
+			$data["idade"] = $_POST["idade"] ?? "";
+			$data["sexo"] = $_POST["sexo"] ?? "";
+			$data["telefone"] = $_POST["telefone"] ?? "";
+			$data["email"] = $_POST["email"] ?? "";
+			$data["unidade"] = $_POST["unidade"] ?? "";
 
 			$data["nome"] = $ferramentas->filtrando($data["nome"]);
 			$data["idade"] = $ferramentas->filtrando($data["idade"]);

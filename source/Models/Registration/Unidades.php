@@ -7,15 +7,15 @@
 		public function __construct(){
 			self::$con = (new Conn())->getConn();
 			$ferramentas = new Ferramentas();			
-			if(isset($_POST['registrationUnidades_identificacao'])){
+			if(isset($_POST['identificacao'])){
 				$this->validation(self::$con, $ferramentas);
 			}
 		}
 		private function validation($con, $ferramentas){
-			$data["identificacao"] = $_POST["registrationUnidades_identificacao"] ?? "";
-			$data["proprietario"] = $_POST["registrationUnidades_proprietario"] ?? "";
-			$data["condominio"] = $_POST["registrationUnidades_condominio"] ?? "";
-			$data["endereco"] = $_POST["registrationUnidades_endereco"] ?? "";
+			$data["identificacao"] = $_POST["identificacao"] ?? "";
+			$data["proprietario"] = $_POST["proprietario"] ?? "";
+			$data["condominio"] = $_POST["condominio"] ?? "";
+			$data["endereco"] = $_POST["endereco"] ?? "";
 
 			$data["identificacao"] = $ferramentas->filtrando($data["identificacao"]);
 			$data["proprietario"] = $ferramentas->filtrando($data["proprietario"]);

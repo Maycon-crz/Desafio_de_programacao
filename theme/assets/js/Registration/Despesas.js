@@ -22,6 +22,9 @@ class CadastroDeDespesas{
 				success: function(retorno){
 					ferramentas("Aguarde", 0, 0);
 					alert(retorno);
+					if(retorno == "Despesa Cadastrada com sucesso!"){
+						ferramentas("Recarregar", 0, 0);
+					}
 				},
 				error: function () { ferramentas("Aguarde", 0, 0); }
 			});
