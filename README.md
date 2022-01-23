@@ -70,5 +70,4 @@
 <img src="theme/assets/img/listagem_de_inquilinos.PNG">
 <h2 id="ListagemDeDespesas">Visualização das despesas</h2>
 <img src="theme/assets/img/listagem_de_despesas.PNG">
-<h2 class="text-success text-center">Tecnologias utilizadas</h2>
 
