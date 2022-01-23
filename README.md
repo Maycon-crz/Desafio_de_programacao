@@ -35,9 +35,21 @@
 </ul>	
 <h2>Vamos começar</h2>
 <ul>
- <li>Recomendo baixar um ambiente de desenvolvimento pronto como o XAMPP(Recomendo) ou WampServer;</li>
- <li>Clone o repositório para sua máquina;</li>
- <li>S</li>
+ <li>Recomendo baixar um ambiente de desenvolvimento pronto como o <a href="https://www.apachefriends.org/pt_br/index.html">XAMPP(Recomendo)</a> ou WampServer;</li> 
+ <li>Clone o repositório para sua máquina na pasta htdocs do XAMPP;</li>
+ <li>Inicie o <a href="https://www.apachefriends.org/pt_br/index.html">XAMPP</a></li>
+ <li>Clique em Start para o Apache</li>
+ <li>Clique em Start para o MySQL</li>  
+ <li>Clique em Admin ao lado do Start do MySQL, para ir ao phpMyAdmin</li>
+ <img src="theme/assets/img/xampp.PNG">
+ <li>Clique na opção Importar</li>
+ <img src="theme/assets/img/importar.PNG">
+ <li>Clique em escolher arquivo</li>
+ <img src="theme/assets/img/ficheiro.PNG">
+ <li>Vá até a pasta hrdocs do xampp depois entre na pasta onde está o clone que você fez do sistema, em seguida na pasta BancoDeDados selecione o arquivo: desafio_ap_coders.sql</li>
+ <img src="theme/assets/img/banco.PNG">
+ <li>No phpMyAdimin clique em executar e o banco de dados sera importado.</li>
+ <li>Para visualizar acesse a pasta do repositório pela barra de navegação exemplo: https://localhost/Desafio_de_programacao/</li>
 </ul>
 <h2 id="CadastroDeUnidades">Cadastro de unidades</h2>
 <img src="theme/assets/img/cadastro_de_unidades.PNG">
