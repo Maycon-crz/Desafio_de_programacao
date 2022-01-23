@@ -30,7 +30,6 @@ class ComposerStaticInite2852e49a731fe15d945565e961e1f13
         'C' => 
         array (
             'CoffeeCode\\Router\\' => 18,
-            'CoffeeCode\\DataLayer\\' => 21,
         ),
     );
 
@@ -46,10 +45,6 @@ class ComposerStaticInite2852e49a731fe15d945565e961e1f13
         'CoffeeCode\\Router\\' => 
         array (
             0 => __DIR__ . '/..' . '/coffeecode/router/src',
-        ),
-        'CoffeeCode\\DataLayer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/coffeecode/datalayer/src',
         ),
     );
 

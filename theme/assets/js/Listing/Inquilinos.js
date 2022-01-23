@@ -15,27 +15,29 @@ class ListarInquilinos{
 					dataType: "JSON",
 					success: function(retorno){
 						ferramentas("Aguarde", 0, 0);
-						let inquilinos="<h2>Listagem de Inquilinos</h2>";
+						let inquilinos="<u><h2 class='text-success'>Listagem de Inquilinos</h2></u>";
 						for(let i=0; i<retorno.length; i++){
-							inquilinos+="<ul class='border border-warning mt-3 p-0 text-center'>";
-								inquilinos+="<li class='border p-3'>"+retorno[i]['nome']+"</li>";
-								inquilinos+="<li class='border p-3'>"+retorno[i]['idade']+"</li>";
-								inquilinos+="<li class='border p-3'>"+retorno[i]['sexo']+"</li>";
-								inquilinos+="<li class='border p-3'>"+retorno[i]['telefone']+"</li>";
-								inquilinos+="<li class='border p-3'>"+retorno[i]['email']+"</li>";
-								inquilinos+="<li class='border p-3'>"+retorno[i]['unidade']+"</li>";
-							inquilinos+="</ul>";
+							inquilinos+="<div class='row mt-3'>";
+								inquilinos+="<div class='col-4 border bg-secondary'>Nome: "+retorno[i]['nome']+"</div>";
+								inquilinos+="<div class='col-4 border bg-secondary'>Idade: "+retorno[i]['idade']+"</div>";
+								inquilinos+="<div class='col-4 border bg-secondary'>Sexo: "+retorno[i]['sexo']+"</div>";
+							inquilinos+="</div><div class='row'>";
+								inquilinos+="<div class='col-4 border bg-light'>Telefone: "+retorno[i]['telefone']+"</div>";
+								inquilinos+="<div class='col-4 border bg-light'>E-mail: </div>";
+								inquilinos+="<div class='col-4 border bg-light'>Unidade: "+retorno[i]['unidade']+"</div>";
+							inquilinos+="</div>";
 						}
-						$("#linhaListagemDeInquilinos").html(inquilinos);
+						inquilinos+="<p>Sexos: m=Masculino | f=Feminino | o=Outro</p>"
+						$("#linhaListagem").html(inquilinos);
 						contador = contador+4;
 					},
 					error: function () { ferramentas("Aguarde", 0, 0); }
 				});
-				$(".btListagemDeInquilinos").text(texto+" ↓↓ ( X )");
+				$(".btListagemDeInquilinos").text(texto+" ( X )");
 				toggle=1;
 			}else{
-				$("#linhaListagemDeInquilinos").html("");
-				$(".btListagemDeInquilinos").text(texto.replace(' ↓↓ ( X )', ''));
+				$("#linhaListagem").html("");
+				$(".btListagemDeInquilinos").text(texto.replace(' ( X )', ''));
 				toggle=0;
 			}
 		});

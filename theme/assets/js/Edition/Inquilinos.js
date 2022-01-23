@@ -16,23 +16,28 @@ class EdicaoDeInquilinos{
 					dataType: "JSON",
 					success: function(retorno){
 						ferramentas("Aguarde", 0, 0);
-						let inquilinos="<h2>Edição de Inquilinos</h2>";
-						console.log(retorno);
-						console.log(url);
+						let inquilinos="<u><h2 class='text-success'>Edição de Inquilinos</h2></u>";						
 						for(let i=0; i<retorno.length; i++){
 							inquilinos+="<form id='formEdicaoInquilinos"+retorno[i]['id']+"' class='formulariosDeEdicaoInquilinos' action='"+url.replace('Listing', 'Edition')+"'><ul class='border border-warning mt-3 p-0 text-center'>";
-								inquilinos+="<li><input type='hidden' class='form-control' name='id' value='"+retorno[i]['id']+"' /></li>";
-								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='nome' value='"+retorno[i]['nome']+"' /></li>";
-								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='idade' value='"+retorno[i]['idade']+"' /></li>";
-								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='sexo' value='"+retorno[i]['sexo']+"' /></li>";
-								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='telefone' value='"+retorno[i]['telefone']+"' /></li>";
-								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='email' value='"+retorno[i]['email']+"' /></li>";
-								inquilinos+="<li class='border p-3'><input type='text' class='form-control' name='unidade' value='"+retorno[i]['unidade']+"' /></li>";
-								inquilinos+="<li><button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-success mt-3 btFormulariosDeEdicaoInquilinos' type='button'>Editar</button></li>";
-								inquilinos+="<li><button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-danger mt-3 btFormulariosDeEdicaoInquilinos' type='button'>Excluir</button></li>";
+								inquilinos+="<label>Id:</label>";
+								inquilinos+="<input type='number' class='form-control' name='id' value='"+retorno[i]['id']+"' disabled />";
+								inquilinos+="<label>Nome:</label>";
+								inquilinos+="<input type='text' class='form-control border' name='nome' value='"+retorno[i]['nome']+"' />";
+								inquilinos+="<label>Idade:</label>";
+								inquilinos+="<input type='text' class='form-control border' name='idade' value='"+retorno[i]['idade']+"' />";
+								inquilinos+="<label>Sexo:</label>";
+								inquilinos+="<input type='text' class='form-control border' name='sexo' value='"+retorno[i]['sexo']+"' />";
+								inquilinos+="<label>Telefone:</label>";
+								inquilinos+="<input type='text' class='form-control border' name='telefone' value='"+retorno[i]['telefone']+"' />";
+								inquilinos+="<label>E-mail:</label>";
+								inquilinos+="<input type='text' class='form-control border' name='email' value='"+retorno[i]['email']+"' />";
+								inquilinos+="<label>Unidade:</label>";
+								inquilinos+="<input type='text' class='form-control border' name='unidade' value='"+retorno[i]['unidade']+"' />";
+								inquilinos+="<button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-success mt-3 btFormulariosDeEdicaoInquilinos' type='button'>Editar</button>";
+								inquilinos+="<button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-danger mt-3 btFormulariosDeEdicaoInquilinos' type='button'>Excluir</button>";
 							inquilinos+="</form></ul>";
 						}
-						$("#linhaEdicaoDeInquilinos").html(inquilinos);
+						$("#linhaEdicao").html(inquilinos);
 						contador = contador+4;
 						objeto.editar(objeto);
 					},
@@ -40,7 +45,7 @@ class EdicaoDeInquilinos{
 				});				
 				toggle=1;				
 			}else{
-				$("#linhaEdicaoDeInquilinos").html("");
+				$("#linhaEdicao").html("");
 				toggle=0;
 			}
 		});

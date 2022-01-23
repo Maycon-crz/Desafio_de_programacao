@@ -31,7 +31,7 @@
 			$msg = ($msg == "") ? $msg = ($data["tipo_despesa"] == "") ? "Digite o tipo de despesa" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["valor"] == "") ? "Digite o valor" : "" : $msg;
 			$msg = ($msg == "") ? $msg = ($data["vencimento_fatura"] == "") ? "Digite o vencimento da fatura" : "" : $msg;
-			$msg = ($msg == "") ? $msg = ($data["status_pagamento"] == "") ? "Digite o status pagamento" : "" : $msg;			
+			$msg = ($msg == "") ? $msg = ($data["status_pagamento"] == "") ? "Selecione o status pagamento" : "" : $msg;			
 			if($msg == ""){
 				$this->cadastro($con, $data);
 			}else{ echo json_encode($msg); }

@@ -8,11 +8,11 @@ class ListarDespesas{
 			let url = $(this).attr("value");
 			if(toggle == 0){				
 				toggle=1;
-				$(".btListagemDeDespesas").text(texto+" ↓↓ ( X )");
+				$(".btListagemDeDespesas").text(texto+" ( X )");
 				objeto.listar(objeto, url, 4, false);				
 			}else{
-				$("#linhaListagemDeDespesas").html("");
-				$(".btListagemDeDespesas").text(texto.replace(' ↓↓ ( X )', ''));
+				$("#linhaListagem").html("");
+				$(".btListagemDeDespesas").text(texto.replace(' ( X )', ''));
 				toggle=0;
 			}
 		});
@@ -25,22 +25,33 @@ class ListarDespesas{
 			data: {"listar": parametro, "filtro": filtro},
 			dataType: "JSON",
 			success: function(retorno){
-				ferramentas("Aguarde", 0, 0);console.log(retorno);
-				let despesas="<h2>Listagem de Despesas</h2>";
+				ferramentas("Aguarde", 0, 0);
+				let despesas="<h2 class='text-success'>Listagem de Despesas</h2>";
 				despesas+="<select name='unidade' class='form-select mt-3' id='selectComUnidadesFiltroDespesas'>"
                 despesas+="<option>Selecione a Unidade:</option>";
             	despesas+="</select>";
-            	despesas+="<button tipe='button' class='form-control btn btn-outline-danger mt-3' id='btfiltroPorFaturaVencida'>Mostrar despesas com fatura vencida</button>";
+            	despesas+="<form class='m-3' id='formFiltroPorData'>";
+            	despesas+="<input type='datetime-local' name='dataInicio' />";
+            	despesas+="<input type='datetime-local' name='dataFim' />";
+            	despesas+="<button type='submit' class='btn btn-outline-success p-1 ms-3'>Buscar</button>";
+            	despesas+="</form>";
 				for(let i=0; i<retorno.length; i++){
-					despesas+="<ul class='border border-warning mt-3 p-0 text-center'>";						
-						despesas+="<li class='border p-3'>"+retorno[i]['descricao']+"</li>";
-						despesas+="<li class='border p-3'>"+retorno[i]['tipo_despesa']+"</li>";
-						despesas+="<li class='border p-3'>"+retorno[i]['valor']+"</li>";
-						despesas+="<li class='border p-3'>"+retorno[i]['vencimento_fatura']+"</li>";
-						despesas+="<li class='border p-3'>"+retorno[i]['status_pagamento']+"</li>";
-					despesas+="</ul>";
+					let vencimento_fatura = retorno[i]['vencimento_fatura'].split(" ", 1);
+					let remodelandoData = vencimento_fatura[0].split("-");	
+					let ano = remodelandoData[0];
+					let mes = remodelandoData[1];
+					let dia = remodelandoData[2];
+					let status_pagamento = (retorno[i]['status_pagamento'] == 0 ) ? "Pendende" : "Pago";					
+					despesas+="<div class='row mt-3'>";
+					despesas+="<div class='col-6 border bg-secondary'>Descrição: "+retorno[i]['descricao']+"</div>";
+					despesas+="<div class='col-6 border bg-secondary'>Tipo despesa: "+retorno[i]['tipo_despesa']+"</div>";
+					despesas+="</div><div class='row'>";
+					despesas+="<div class='col-4 border bg-light'>Valor: "+retorno[i]['valor']+"</div>";
+					despesas+="<div class='col-4 border bg-light'>Vencimento da fatura: "+dia+"/"+mes+"/"+ano+"</div>";
+					despesas+="<div class='col-4 border bg-light'>Status pagamento: "+status_pagamento+"</div>";
+					despesas+="</div>";					
 				}
-				$("#linhaListagemDeDespesas").html(despesas);
+				$("#linhaListagem").html(despesas);
 				selectComUnidades();
 				objeto.filtroPorUnidade(objeto, url);
 				objeto.filtroPorFaturaVencida(objeto, url);
@@ -51,14 +62,18 @@ class ListarDespesas{
 	filtroPorUnidade(objeto, url){
 		$("#selectComUnidadesFiltroDespesas").on("change", function(){
 			let unidade = $(this).val();			
-			if(unidade != "Selecione a Unidade:"){				
+			if(unidade != "Selecione a Unidade:"){		
 				objeto.listar(objeto, url, "Unidades", unidade);
 			}
 		});
 	}
 	filtroPorFaturaVencida(objeto, url){
-		$("#btfiltroPorFaturaVencida").click(function(){
-			objeto.listar(objeto, url, "Vencidas", false);
+		$("#formFiltroPorData").submit(function(event){
+			event.preventDefault();
+			let dataInicio = $("input[name='dataInicio']").val();
+			let dataFim = $("input[name='dataFim']").val();
+			let datas = dataInicio+"|"+dataFim;			
+			objeto.listar(objeto, url, "Vencidas", datas);
 		});
 	}	
 }

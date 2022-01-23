@@ -20,19 +20,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeInquilinos" value="<?= url("source/Models/Listing/Inquilinos.php"); ?>">Inquilinos</button></li>
                         <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeUnidades" value="<?= url("source/Models/Listing/Unidades.php"); ?>">Unidades</button></li>
+                        <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeInquilinos" value="<?= url("source/Models/Listing/Inquilinos.php"); ?>">Inquilinos</button></li>                        
                         <li class="nav-item"><button class="form-control btn btn-outline-secondary p-3 btListagemDeDespesas" value="<?= url("source/Models/Listing/Despesas.php"); ?>">Despesas</button></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle border border-success rounded p-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastros e Edições
                             </a>
                             <ul class="dropdown-menu justify-content-end" aria-labelledby="navbarDropdown">                                
-                                <li><a class="dropdown-item btAbreCadastroDeInquilinos" href="#">Cadastros de Inquilinos</a></li>
+                                <li><a class="dropdown-item btAbreCadastroDeUnidades" href="#">Cadastro de Unidades</a></li>
+                                <li><a class="dropdown-item btAbreCadastroDeInquilinos" href="#">Cadastro de Inquilinos</a></li>
+                                <li><a class="dropdown-item btAbreCadastroDeDespesas" href="#">Cadastro de Despesas</a></li>
+                                <li><a value="<?= url("source/Models/Listing/Unidades.php"); ?>" class="dropdown-item btAbreEdicaoDeUnidades" href="#">Edição de Unidades</a></li>
                                 <li><a value="<?= url("source/Models/Listing/Inquilinos.php"); ?>" class="dropdown-item btAbreEdicaoDeInquilinos" href="#">Edição de Inquilinos</a></li>
-                                <li><a class="dropdown-item btAbreCadastroDeUnidades" href="#">Cadastros de Unidades de um condomínio</a></li>
-                                <li><a value="<?= url("source/Models/Listing/Unidades.php"); ?>" class="dropdown-item btAbreEdicaoDeUnidades" href="#">Edição de Unidades de um condomínio</a></li>
-                                <li><a class="dropdown-item btAbreCadastroDeDespesas" href="#">Cadastros de Despesas</a></li>
                                 <li><a value="<?= url("source/Models/Listing/Despesas.php"); ?>" class="dropdown-item btAbreEdicaoDeDespesas" href="#">Edição de Despesas</a></li>
                             </ul>
                         </li>                        

@@ -26,10 +26,13 @@
 	    		break;
 	    		case "Vencidas":
 	    			date_default_timezone_set('America/Sao_Paulo');
-	    			$agora = date('Y-m-d H:i:s');
-					echo json_encode($agora);
-	    			// $sql = "SELECT * FROM despesas WHERE unidade=:unidade ORDER BY id DESC";
-			     //    $sql = $con->prepare($sql);
+	    			$filtro = explode("|", $filtro);
+	    			$dataInicio = $filtro[0];
+	    			$dataFim = $filtro[1];
+					$sql = "SELECT * FROM despesas WHERE vencimento_fatura BETWEEN :dataInicio AND :dataFim";
+					$sql = $con->prepare($sql);
+					$sql->bindParam(":dataInicio", $dataInicio, PDO::PARAM_STR);
+					$sql->bindParam(":dataFim", $dataFim, PDO::PARAM_STR);					
 	    		break;
 	    	}
 			if($sql->execute()){

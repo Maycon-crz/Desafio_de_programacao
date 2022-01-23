@@ -16,19 +16,24 @@ class EdicaoDeUnidades{
 					dataType: "JSON",
 					success: function(retorno){
 						ferramentas("Aguarde", 0, 0);						
-						let unidades="<h2>Edição de Unidades</h2>";
+						let unidades="<u><h2 class='text-success'>Edição de Unidades</h2></u>";
 						for(let i=0; i<retorno.length; i++){
 							unidades+="<form id='formEdicaoUnidades"+retorno[i]['id']+"' class='formulariosDeEdicaoUnidades' action='"+url.replace('Listing', 'Edition')+"'><ul class='border border-warning mt-3 p-0 text-center'>";
-								unidades+="<li><input type='hidden' class='form-control' name='id' value='"+retorno[i]['id']+"' /></li>";
-								unidades+="<li class='border p-3'><input type='text' class='form-control' name='identificacao' value='"+retorno[i]['identificacao']+"' /></li>";
-								unidades+="<li class='border p-3'><input type='text' class='form-control' name='proprietario' value='"+retorno[i]['proprietario']+"' /></li>";
-								unidades+="<li class='border p-3'><input type='text' class='form-control' name='condominio' value='"+retorno[i]['condominio']+"' /></li>";
-								unidades+="<li class='border p-3'><input type='text' class='form-control' name='endereco' value='"+retorno[i]['endereco']+"' /></li>";
-								unidades+="<li><button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-success mt-3 btFormulariosDeEdicaoUnidades' type='button'>Editar</button></li>";
-								unidades+="<li><button value='"+retorno[i]['id']+"' target='"+retorno[i]['identificacao']+"' class='form-control btn btn-outline-danger mt-3 btFormulariosDeEdicaoUnidades' type='button'>Excluir</button></li>";								
+								unidades+="<label>Id:</label>";
+								unidades+="<input type='number' class='form-control border' name='id' value='"+retorno[i]['id']+"' disabled />";
+								unidades+="<label>Identificação:</label>";
+								unidades+="<input type='text' class='form-control border' name='identificacao' value='"+retorno[i]['identificacao']+"' />";
+								unidades+="<label>Proprietário:</label>";
+								unidades+="<input type='text' class='form-control border' name='proprietario' value='"+retorno[i]['proprietario']+"' />";
+								unidades+="<label>Condomínio:</label>";
+								unidades+="<input type='text' class='form-control border' name='condominio' value='"+retorno[i]['condominio']+"' />";
+								unidades+="<label>Endereço:</label>";
+								unidades+="<input type='text' class='form-control border' name='endereco' value='"+retorno[i]['endereco']+"' />";
+								unidades+="<button value='"+retorno[i]['id']+"' class='form-control btn btn-outline-success mt-3 btFormulariosDeEdicaoUnidades' type='button'>Editar</button>";
+								unidades+="<button value='"+retorno[i]['id']+"' target='"+retorno[i]['identificacao']+"' class='form-control btn btn-outline-danger mt-3 btFormulariosDeEdicaoUnidades' type='button'>Excluir</button>";
 							unidades+="</form></ul>";
 						}
-						$("#linhaEdicaoDeUnidades").html(unidades);
+						$("#linhaEdicao").html(unidades);
 						contador = contador+4;
 						objeto.editar(objeto);
 					},
@@ -36,7 +41,7 @@ class EdicaoDeUnidades{
 				});				
 				toggle=1;				
 			}else{
-				$("#linhaEdicaoDeUnidades").html("");
+				$("#linhaEdicao").html("");
 				toggle=0;
 			}			
 		});
