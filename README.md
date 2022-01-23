@@ -14,6 +14,7 @@
  <li>----</li>
  <li>Filtro por unidade;</li>
  <li>Filtro por despesas com fatura vencida;</li>
+ <li>OBS: Caso aconteça algum problema pode ser a URL base vá até (source/Config.php) e verifique se a url base corresponde a pasta onde seu clone foi baixado!</li>
 </ul>
 <h2 class="text-success text-center">Tecnologias utilizadas</h2>
 <ul class="p-0">
